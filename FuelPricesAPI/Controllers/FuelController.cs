@@ -1,9 +1,10 @@
-﻿using FuelPricesAPI.Services;
+﻿using FuelPricesAPI.Models;
+using HtmlAgilityPack;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace FuelPricesAPI.Controllers
 {
@@ -11,20 +12,25 @@ namespace FuelPricesAPI.Controllers
     [ApiController]
     public class FuelController : ControllerBase
     {
-        ScrapPage sp = new ScrapPage();
-
         [HttpGet]
         public async Task<string> GetFuelPrice()
         {
-            var urlFuel = "https://www.micm.gob.do/direcciones/combustibles";
+            var client = new HttpClient();
+            var response = await client.GetStringAsync(Fuel.UrlFuel);
+            var htmlDoc = new HtmlDocument();
+            var resultHtml = new List<string>();
 
-            HttpClient client = new HttpClient();
+            htmlDoc.LoadHtml(response);
 
-            var response = await client.GetStringAsync(urlFuel);
+            HtmlNode[] htmlNode = htmlDoc.DocumentNode.SelectNodes("//tr")
+                .Where(x => x.InnerText.Contains("Gasolina")).ToArray();
 
-            sp.PriceFuel(response);
+            foreach (HtmlNode item in htmlNode)
+            {
+                resultHtml.Add(item.InnerHtml);
+            }
 
-            return sp.ScrapResult;
+            return resultHtml.FirstOrDefault();
         }
     }
 }
