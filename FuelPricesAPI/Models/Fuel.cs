@@ -6,15 +6,10 @@ namespace FuelPricesAPI.Models
     {
         public static string UrlFuel = "https://www.micm.gob.do/direcciones/combustibles";
 
-        public TypeFuel Type { get; set; }
+        public string FuelPremium { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:#,0}")]
-        public decimal Price { get; set; }
+        public string FuelRegular { get; set; }
+
     }
 
-    public enum TypeFuel
-    {
-        Regular,
-        Premium
-    }
 }
