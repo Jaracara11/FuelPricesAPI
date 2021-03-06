@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using FuelPricesAPI.Models;
 using Newtonsoft.Json;
 
 namespace FuelPricesAPI.Services
