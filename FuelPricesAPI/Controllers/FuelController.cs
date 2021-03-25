@@ -1,5 +1,4 @@
 ﻿using FuelPricesAPI.Models;
-using FuelPricesAPI.Services;
 using HtmlAgilityPack;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -32,25 +31,25 @@ namespace FuelPricesAPI.Controllers
             return resultHtml;
         }
 
-        [Route("{fuel}")]
-        [HttpPost]
-        public async Task<string> GetFuelPrice(string fuel)
-        {
-            var client = new HttpClient();
-            var response = await client.GetStringAsync(Fuel.UrlFuel);
-            var htmlDoc = new HtmlDocument();
-            var resultHtml = new List<string>();
+        //[Route("{fuel}")]
+        //[HttpPost]
+        //public async Task<string> GetFuelPrice(string fuel)
+        //{
+        //    var client = new HttpClient();
+        //    var response = await client.GetStringAsync(Fuel.UrlFuel);
+        //    var htmlDoc = new HtmlDocument();
+        //    var resultHtml = new List<string>();
 
-            htmlDoc.LoadHtml(response);
+        //    htmlDoc.LoadHtml(response);
 
-            HtmlNode[] htmlNode = htmlDoc.DocumentNode.SelectNodes("//tbody").ToArray();
+        //    HtmlNode[] htmlNode = htmlDoc.DocumentNode.SelectNodes("//tbody").ToArray();
 
-            foreach (HtmlNode item in htmlNode)
-            {
-                resultHtml.Add(item.InnerHtml);
-            }
+        //    foreach (HtmlNode item in htmlNode)
+        //    {
+        //        resultHtml.Add(item.InnerHtml);
+        //    }
 
-            return resultHtml;
-        }
+        //    return resultHtml;
+        //}
     }
 }
