@@ -22,10 +22,9 @@ namespace FuelPricesAPI.Controllers
 
             htmlDoc.LoadHtml(response);
 
-            HtmlNode[] tableHtmlNode = htmlDoc.DocumentNode.SelectNodes("//tr").ToArray();
+            HtmlNode[] htmlNode = htmlDoc.DocumentNode.SelectNodes("//tr").ToArray();
 
-
-            foreach (HtmlNode item in tableHtmlNode)
+            foreach (HtmlNode item in htmlNode)
             {
                 resultHtml.Add(item.InnerHtml);
             }
