@@ -1,4 +1,5 @@
 ﻿using FuelPricesAPI.Models;
+using FuelPricesAPI.Service;
 using HtmlAgilityPack;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace FuelPricesAPI.Controllers
     public class FuelController : ControllerBase
     {
         [HttpGet]
-        public async Task<List<string>> GetFuelPrices()
+        public async Task<string> GetFuelPrices()
         {
             var client = new HttpClient();
             var response = await client.GetStringAsync(Fuel.UrlFuel);
@@ -21,14 +22,15 @@ namespace FuelPricesAPI.Controllers
 
             htmlDoc.LoadHtml(response);
 
-            HtmlNode[] htmlNode = htmlDoc.DocumentNode.SelectNodes("//tbody").ToArray();
+            HtmlNode[] tableHtmlNode = htmlDoc.DocumentNode.SelectNodes("//tr").ToArray();
 
-            foreach (HtmlNode item in htmlNode)
+
+            foreach (HtmlNode item in tableHtmlNode)
             {
                 resultHtml.Add(item.InnerHtml);
             }
 
-            return resultHtml;
+            return FormatResponse.ReturnFuelPrices(resultHtml);
         }
     }
 }

@@ -20,10 +20,7 @@ namespace FuelPricesAPI
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>().UseKestrel(options =>
-                    {
-                        options.Listen(System.Net.IPAddress.Any, 5000);
-                    });
+                    webBuilder.UseStartup<Startup>();
                 });
     }
 }
