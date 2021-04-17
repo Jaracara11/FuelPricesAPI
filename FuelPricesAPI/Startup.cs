@@ -16,6 +16,7 @@ namespace FuelPricesAPI
 {
     public class Startup
     {
+        private readonly string Cors = "Cors";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -26,6 +27,14 @@ namespace FuelPricesAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: Cors,
+                    builder =>
+                    {
+                        builder.WithOrigins("*");
+                    });
+            });
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -47,6 +56,8 @@ namespace FuelPricesAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(Cors);
 
             app.UseAuthorization();
 

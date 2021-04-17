@@ -22,7 +22,7 @@ namespace FuelPricesAPI
                 {
                     webBuilder.UseStartup<Startup>().UseKestrel(options =>
                     {
-                        options.Listen(System.Net.IPAddress.Any, 5000);
+                        options.Listen(System.Net.IPAddress.Any, 5001);
                     });
                 });
     }
