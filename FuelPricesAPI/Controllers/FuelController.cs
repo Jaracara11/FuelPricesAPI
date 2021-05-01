@@ -1,9 +1,7 @@
 ﻿using FuelPricesAPI.Models;
 using FuelPricesAPI.Service;
-using HtmlAgilityPack;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 namespace FuelPricesAPI.Controllers
@@ -13,23 +11,20 @@ namespace FuelPricesAPI.Controllers
     public class FuelController : ControllerBase
     {
         [HttpGet]
-        public async Task<string> GetFuelPrices()
+        public async Task<IActionResult> GetFuelPrices()
         {
             var client = new HttpClient();
-            var response = await client.GetStringAsync(Fuel.UrlFuel);
-            var htmlDoc = new HtmlDocument();
-            var resultHtml = new List<string>();
-
-            htmlDoc.LoadHtml(response);
-
-            HtmlNode[] htmlNode = htmlDoc.DocumentNode.SelectNodes("//tr").ToArray();
-
-            foreach (HtmlNode item in htmlNode)
+            
+            try
             {
-                resultHtml.Add(item.InnerHtml);
-            }
+                var response = await client.GetStringAsync(Fuel.UrlFuel);
 
-            return FormatResponse.ReturnFuelPrices(resultHtml);
+                return Ok(JsonService.ReturnFuelPrices(response));
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
         }
     }
 }

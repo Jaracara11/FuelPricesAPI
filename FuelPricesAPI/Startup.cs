@@ -1,22 +1,14 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FuelPricesAPI
 {
     public class Startup
     {
-        private readonly string Cors = "Cors";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -29,10 +21,10 @@ namespace FuelPricesAPI
         {
             services.AddCors(options =>
             {
-                options.AddPolicy(name: Cors,
+                options.AddPolicy(name: "Cors",
                     builder =>
                     {
-                        builder.WithOrigins("*");
+                        builder.AllowAnyOrigin().WithMethods("GET").AllowAnyHeader();
                     });
             });
 
@@ -57,7 +49,7 @@ namespace FuelPricesAPI
 
             app.UseRouting();
 
-            app.UseCors(Cors);
+            app.UseCors("Cors");
 
             app.UseAuthorization();
 
