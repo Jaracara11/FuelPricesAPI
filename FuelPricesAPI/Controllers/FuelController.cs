@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 namespace FuelPricesAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/fuel")]
     [ApiController]
     public class FuelController : ControllerBase
     {
