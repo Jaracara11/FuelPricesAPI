@@ -28,7 +28,11 @@ namespace FuelPricesAPI
                     });
             });
 
-            services.AddControllers();
+            services.AddControllers(setupAction => 
+            {
+                setupAction.ReturnHttpNotAcceptable = true;
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "FuelPricesAPI", Version = "v1" });
